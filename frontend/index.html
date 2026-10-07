@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GameHub · Redis practice</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div><p class="eyebrow">Redis practice</p><h1>GameHub</h1></div>
+    </header>
+
+    <main class="layout">
+      <section class="workspace">
+        <div class="grid">
+          <article class="card">
+            <h2>Профиль</h2>
+            <form data-action="profile-save">
+              <input name="id" placeholder="ID игрока" value="player-1" required />
+              <input name="name" placeholder="Имя" value="Alex" required />
+              <input name="level" type="number" min="0" placeholder="Уровень" value="1" required />
+              <input name="region" placeholder="Регион" value="eu" required />
+              <button type="submit">Сохранить</button>
+            </form>
+            <form class="inline" data-action="profile-get">
+              <input name="id" placeholder="ID игрока" value="player-1" required />
+              <button type="submit">Получить</button>
+            </form>
+            <form class="inline three" data-action="level-update">
+              <input name="id" placeholder="ID игрока" value="player-1" required />
+              <input name="delta" type="number" placeholder="Δ уровня" value="1" required />
+              <button type="submit">Изменить</button>
+            </form>
+            <form class="inline" data-action="login">
+              <input name="id" placeholder="ID игрока" value="player-1" required />
+              <button type="submit">Зафиксировать вход</button>
+            </form>
+          </article>
+
+          <article class="card">
+            <h2>Лидерборд</h2>
+            <form class="inline three" data-action="score-add">
+              <input name="id" placeholder="ID игрока" value="player-1" required />
+              <input name="score" type="number" step="any" placeholder="Очки" value="100" required />
+              <button type="submit">Добавить</button>
+            </form>
+            <form class="inline" data-action="leaderboard-top">
+              <input name="limit" type="number" min="1" max="100" value="10" required />
+              <button type="submit">Показать топ</button>
+            </form>
+            <form class="inline" data-action="leaderboard-rank">
+              <input name="id" placeholder="ID игрока" value="player-1" required />
+              <button type="submit">Узнать место</button>
+            </form>
+          </article>
+
+          <article class="card">
+            <h2>Достижения</h2>
+            <form class="inline three" data-action="achievement-add">
+              <input name="id" placeholder="ID игрока" value="player-1" required />
+              <input name="name" placeholder="Достижение" value="first-win" required />
+              <button type="submit">Добавить</button>
+            </form>
+            <form class="inline three" data-action="achievement-check">
+              <input name="id" placeholder="ID игрока" value="player-1" required />
+              <input name="name" placeholder="Достижение" value="first-win" required />
+              <button type="submit">Проверить</button>
+            </form>
+            <form class="inline three" data-action="achievements-common">
+              <input name="firstId" placeholder="Первый ID" value="player-1" required />
+              <input name="secondId" placeholder="Второй ID" value="player-2" required />
+              <button type="submit">Найти общие</button>
+            </form>
+          </article>
+
+          <article class="card">
+            <h2>Пакетная загрузка</h2>
+            <form data-action="batch-create">
+              <textarea name="players" rows="8" spellcheck="false">[
+  {"id":"player-1","name":"Alex","level":1,"region":"eu"},
+  {"id":"player-2","name":"Sam","level":2,"region":"us"}
+]</textarea>
+              <button type="submit">Отправить пакет</button>
+            </form>
+          </article>
+        </div>
+
+        <section class="result-panel">
+          <div class="section-heading"><h2>Ответ</h2><span id="result-status">Запросов ещё не было</span></div>
+          <pre id="result">Выберите действие выше.</pre>
+        </section>
+      </section>
+
+      <aside class="request-log">
+        <div class="section-heading">
+          <div><p class="eyebrow">HTTP</p><h2>Журнал запросов</h2></div>
+          <button id="clear-log" class="ghost compact" type="button">Очистить</button>
+        </div>
+        <ol id="log-list" aria-live="polite"></ol>
+      </aside>
+    </main>
+  </body>
+</html>
